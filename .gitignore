@@ -203,3 +203,7 @@ README.html
 mvnw
 mvnw.cmd
 .gitattributes
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
