@@ -1,0 +1,18 @@
+branch-defaults:
+  main:
+    environment: null
+    group_suffix: null
+global:
+  application_name: MoringaMark_API
+  branch: main
+  default_ec2_keyname: Bassell-kp-test
+  default_platform: Corretto 21 running on 64bit Amazon Linux 2023
+  default_region: eu-central-1
+  include_git_submodules: true
+  instance_profile: null
+  platform_name: null
+  platform_version: null
+  profile: eb-cli
+  repository: MoringaMark_API
+  sc: git
+  workspace_type: Application
