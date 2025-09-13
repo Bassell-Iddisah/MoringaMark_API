@@ -1,4 +1,4 @@
 .elasticbeanstalk
 .idea
-target
+!target/*.jar
 HELP.md
