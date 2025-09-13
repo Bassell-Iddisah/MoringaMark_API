@@ -32,11 +32,16 @@
             aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
             aws-region: ${{ secrets.AWS_REGION }}
 
+        - name: containerize app
+          run: |
+            docker build -t 495599742316.dkr.ecr.eu-central-1.amazonaws.com/bassell-registry:latest .
+            
+
         - name: Configure docker to AWS ECR
           run: |
             aws ecr get-login-password --region eu-central-1 | docker login --username AWS --password-stdin 495599742316.dkr.ecr.eu-central-1.amazonaws.com
 
-        - name: Upload zipped app to ECR
+        - name: Upload container app to ECR
           run: |
             docker push 495599742316.dkr.ecr.eu-central-1.amazonaws.com/bassell-registry:latest
 # aws s3 cp app.zip s3://bassell-cicd-lab-bucket/app.zip
