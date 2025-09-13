@@ -1,5 +1,5 @@
 // Mock API data - Replace with your actual API endpoint
-const API_BASE_URL = 'http://localhost:8080/api/v1.0';
+const API_BASE_URL = 'http://localhost:5000/api/v1.0';
 
 // Sample product data (replace with actual API call)
 const mockProducts = [

@@ -1,6 +1,7 @@
 package org.ninjabrand.controller;
 
 import org.ninjabrand.dto.CategoryDTO;
+import org.ninjabrand.dto.ProductDTO;
 import org.ninjabrand.model.Category;
 import org.ninjabrand.service.CategoryService;
 import org.springframework.web.bind.annotation.*;
@@ -38,9 +39,9 @@ public class CategoryController {
     @PutMapping("/{id}")
     public Category updateCategory(
             @PathVariable("id") Long id,
-            @RequestBody CategoryDTO categoryDTO
+            @RequestBody CategoryDTO categoryDTO, ProductDTO productDTO
     ) {
-        return categoryService.updateCategory(id, categoryDTO);
+        return categoryService.updateCategory(id, categoryDTO, productDTO);
     }
 
     @DeleteMapping("/{id}")

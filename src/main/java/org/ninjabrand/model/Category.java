@@ -17,11 +17,15 @@ import java.util.Set;
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "cId")
-    private Long categoryId;
+    private int categoryId;
     private String name;
     private String desc;
 
-//    @OneToMany(mappedBy = "category", cascade=CascadeType.ALL, orphanRemoval=true)
-//    private Set<Product> products = new HashSet<>();
+    @OneToMany(mappedBy = "category", cascade=CascadeType.ALL, orphanRemoval=true)
+    private Set<Product> products = new HashSet<>();
+
+    public void addProduct(Product product) {
+        this.products.add(product);
+        product.setCategory(this);
+    }
 }

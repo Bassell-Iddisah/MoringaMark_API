@@ -7,5 +7,5 @@ public class ProductDTO {
     public String name;
     public String desc;
     public Double price;
-    private Category category;
+    public Category category;
 }

@@ -22,6 +22,7 @@ public class ProductServiceImpl implements ProductService {
                 .name(productDTO.name)
                 .desc(productDTO.desc)
                 .price(productDTO.price)
+                .category(productDTO.category)
                 .build();
 
         return productRepo.save(newProduce);
@@ -46,6 +47,7 @@ public class ProductServiceImpl implements ProductService {
             product.setName(productDTO.name);
             product.setDesc(productDTO.desc);
             product.setPrice(productDTO.price);
+            product.setCategory(productDTO.category);
             return productRepo.save(product);
         } else {
             return new Product();
