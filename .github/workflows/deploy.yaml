@@ -47,9 +47,9 @@
 #            aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
 #            aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 #            aws-region: ${{ secrets.AWS_REGION }}
-#        - name: Configure docker to AWS ECR
-#          run: |
-#            aws ecr get-login-password --region eu-central-1 --profile ${{ secrets.AWS_Profile }} | docker login --username AWS --password-stdin 495599742316.dkr.ecr.eu-central-1.amazonaws.com
+        - name: Configure docker to AWS ECR
+          run: |
+            docker login --username AWS --password-stdin 495599742316.dkr.ecr.eu-central-1.amazonaws.com
 
         - name: containerize app
           run: |
