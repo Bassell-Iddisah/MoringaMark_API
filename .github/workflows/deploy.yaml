@@ -31,7 +31,7 @@
             zip -j release/app.zip release/*.jar
 
         - name: Configure AWS Credentials
-          uses: aws-actions/configure-aws-credentials@main # Or a specific version
+          uses: aws-actions/configure-aws-credentials@v4.1.0
           with:
             role-to-assume: arn:aws:iam::495599742316:role/Github-OIDC-Role
             aws-region: eu-central-1
