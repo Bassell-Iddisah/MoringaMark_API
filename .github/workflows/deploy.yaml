@@ -5,8 +5,11 @@
       branches:
         - main  # or your default branch
 
+  permissions:
+    id-token: write
+
   jobs:
-    build:
+    run_job_with_aws:
       runs-on: ubuntu-latest
       steps:
         - uses: actions/checkout@v2
@@ -15,26 +18,38 @@
             distribution: 'temurin'
             java-version: '21'
 
+        # Build with Maven
         - name: Build with Maven
           run: mvn -B package --file pom.xml
           #-DskipTests
 
+          # Compress the application
         - name: Zip Java artifact
           run: |
             mkdir -p release
             cp target/*.jar release/
             zip -j release/app.zip release/*.jar
 
-        - name: Configure AWS credentials
-          uses: aws-actions/configure-aws-credentials@v1
+        - name: Configure AWS Credentials
+          uses: aws-actions/configure-aws-credentials@main # Or a specific version
           with:
-            aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-            aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-            aws-region: ${{ secrets.AWS_REGION }}
+            role-to-assume: ${{ secrets.AWS_IAM_ROLE }}
+            aws-region: eu-central-1
 
+        - name: Additional steps
+          run: |
+            aws sts get-caller-identity
+
+#           Configure AWS credentials for deployment
+#        - name: Configure AWS credentials
+#          uses: aws-actions/configure-aws-credentials@v1
+#          with:
+#            aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#            aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#            aws-region: ${{ secrets.AWS_REGION }}
         - name: containerize app
           run: |
-            docker build -t 495599742316.dkr.ecr.eu-central-1.amazonaws.com/bassell-registry:latest .
+            docker build -t 495599742316.dkr.ecr.eu-central-1.amazonaws.com/bassell-test .
             
 
         - name: Configure docker to AWS ECR
@@ -43,5 +58,5 @@
 
         - name: Upload container app to ECR
           run: |
-            docker push 495599742316.dkr.ecr.eu-central-1.amazonaws.com/bassell-registry:latest
+            docker push 495599742316.dkr.ecr.eu-central-1.amazonaws.com/bassell-test
 # aws s3 cp app.zip s3://bassell-cicd-lab-bucket/app.zip
