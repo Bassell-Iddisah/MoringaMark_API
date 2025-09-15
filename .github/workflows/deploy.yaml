@@ -33,7 +33,7 @@
         - name: Configure AWS Credentials
           uses: aws-actions/configure-aws-credentials@main # Or a specific version
           with:
-            role-to-assume: ${{ secrets.AWS_IAM_ROLE }}
+            role-to-assume: arn:aws:iam::495599742316:role/Github-OIDC-Role
             aws-region: eu-central-1
 
         - name: Additional steps
