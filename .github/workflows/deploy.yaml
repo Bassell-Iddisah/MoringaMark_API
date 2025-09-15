@@ -49,7 +49,7 @@
 #            aws-region: ${{ secrets.AWS_REGION }}
         - name: Configure docker to AWS ECR
           run: |
-            aws ecr get-login-password --region eu-central-1 | docker login --username AWS --password-stdin 495599742316.dkr.ecr.eu-central-1.amazonaws.com
+            aws ecr get-login-password --region eu-central-1 --profile dev_Bassell | docker login --username AWS --password-stdin 495599742316.dkr.ecr.eu-central-1.amazonaws.com
 
         - name: containerize app
           run: |
