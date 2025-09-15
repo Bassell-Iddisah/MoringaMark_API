@@ -34,7 +34,7 @@
 
         - name: containerize app
           run: |
-            docker build -t 495599742316.dkr.ecr.eu-central-1.amazonaws.com/bassell-registry:latest .
+            docker build -t 495599742316.dkr.ecr.eu-central-1.amazonaws.com/bassell-test:latest .
             
 
         - name: Configure docker to AWS ECR
@@ -43,5 +43,5 @@
 
         - name: Upload container app to ECR
           run: |
-            docker push 495599742316.dkr.ecr.eu-central-1.amazonaws.com/bassell-registry:latest
+            docker push 495599742316.dkr.ecr.eu-central-1.amazonaws.com/bassell-test:latest
 # aws s3 cp app.zip s3://bassell-cicd-lab-bucket/app.zip
