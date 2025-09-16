@@ -32,6 +32,6 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
 
-      - name: Upload zipped app to ECR
+      - name: Upload zipped app to S3
         run: |
           aws s3 cp release/app.zip s3://elb-java-app-bucket/app.zip
