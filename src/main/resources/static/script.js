@@ -1,5 +1,5 @@
 // Mock API data - Replace with your actual API endpoint
-const API_BASE_URL = 'http://localhost:5000/api/v1.0';
+const API_BASE_URL = 'http://moringamark2-env.eba-2k5m9uuu.eu-central-1.elasticbeanstalk.com:5000/api/v1.0';
 
 // Sample product data (replace with actual API call)
 const mockProducts = [
