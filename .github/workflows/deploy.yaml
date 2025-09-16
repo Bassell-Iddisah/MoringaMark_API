@@ -5,9 +5,6 @@
       branches:
         - main  # or your default branch
 
-  permissions:
-    id-token: write
-
   jobs:
     run_job_with_aws:
       runs-on: ubuntu-latest
