@@ -1,57 +1,38 @@
-  name: Java CI with Maven | deploy to ECR
+name: Java CI with Maven
 
-  on:
-    push:
-      branches:
-        - main  # or your default branch
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
 
-  jobs:
-    run_job_with_aws:
-      runs-on: ubuntu-latest
-      steps:
-        - uses: actions/checkout@v2
-        - uses: actions/setup-java@v2
-          with:
-            distribution: 'temurin'
-            java-version: '21'
+jobs:
+  build:
+    runs-on: ubuntu-latest
 
-        # Build with Maven
-        - name: Build with Maven
-          run: mvn -B package --file pom.xml
-          #-DskipTests
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v2
+        with:
+          distribution: 'temurin'
+          java-version: '21'
 
-          # Compress the application
-        - name: Zip Java artifact
-          run: |
-            mkdir -p release
-            cp target/*.jar release/
-            zip -j release/app.zip release/*.jar
+      - name: Build with Maven
+        run: mvn -B package --file pom.xml
 
-        - name: Configure AWS Credentials
-          uses: aws-actions/configure-aws-credentials@v4.1.0
-          with:
-            role-to-assume: arn:aws:iam::495599742316:role/Github-OIDC-Role
-            aws-region: eu-central-1
+      - name: Zip Java artifact
+        run: |
+          mkdir -p release
+          cp target/*.jar release/
+          zip -j release/app.zip release/*.jar
 
-        - name: Additional steps
-          run: |
-            aws sts get-caller-identity
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
 
-#           Configure AWS credentials for deployment
-#        - name: Configure AWS credentials
-#          uses: aws-actions/configure-aws-credentials@v1
-#          with:
-#            aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-#            aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-#            aws-region: ${{ secrets.AWS_REGION }}
-        - name: Configure docker to AWS ECR
-          run: |
-            aws ecr get-login-password --region eu-central-1 | docker login --username AWS --password-stdin 495599742316.dkr.ecr.eu-central-1.amazonaws.com
-
-        - name: containerize app
-          run: |
-            docker build -t 495599742316.dkr.ecr.eu-central-1.amazonaws.com/bassell-test:latest .
-
-        - name: Upload container app to ECR
-          run: |
-            docker push 495599742316.dkr.ecr.eu-central-1.amazonaws.com/bassell-test:latest
+      - name: Upload zipped app to ECR
+        run: |
+          aws s3 cp release/app.zip s3://elb-java-app-bucket/app.zip
