@@ -13,6 +13,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1.0/products")
 public class ProductController {
+
     @Autowired
     private ProductService productService;
 
@@ -22,9 +23,8 @@ public class ProductController {
     }
 
     @PostMapping()
-    public ResponseEntity<Product> createProduct(@RequestBody ProductDTO productDTO) {
-        Product product = productService.createProduct(productDTO);
-        return new ResponseEntity<>(product, HttpStatus.OK);
+    public ResponseEntity<Product> createProduct(@RequestBody Product product) {
+        return new ResponseEntity<>(productService.createProduct(product), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
@@ -43,8 +43,8 @@ public class ProductController {
     @PutMapping("/{id}")
     public ResponseEntity<Product> updateProduct(
             @PathVariable("id") Long id,
-            @RequestBody ProductDTO productDTO) {
-        Product updatedproduct = productService.updateProduct(id, productDTO);
+            @RequestBody Product product) {
+        Product updatedproduct = productService.updateProduct(id, product);
         return new ResponseEntity<>(updatedproduct, HttpStatus.OK);
 
     }

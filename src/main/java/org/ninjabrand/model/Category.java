@@ -1,5 +1,7 @@
 package org.ninjabrand.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -11,9 +13,10 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
-@Builder
+@Table
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,11 +24,11 @@ public class Category {
     private String name;
     private String desc;
 
-    @OneToMany(mappedBy = "category", cascade=CascadeType.ALL, orphanRemoval=true)
-    private Set<Product> products = new HashSet<>();
+//    @OneToMany(mappedBy = "category", cascade=CascadeType.ALL, orphanRemoval=true)
+//    private Set<Product> products = new HashSet<>();
 
-    public void addProduct(Product product) {
-        this.products.add(product);
-        product.setCategory(this);
-    }
+//    public void addProduct(Product product) {
+//        this.products.add(product);
+//        product.setCategory(this);
+//    }
 }

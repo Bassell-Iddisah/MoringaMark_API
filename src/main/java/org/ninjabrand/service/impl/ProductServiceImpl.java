@@ -17,15 +17,8 @@ public class ProductServiceImpl implements ProductService {
     private ProductRepository productRepo;
 
     @Override
-    public Product createProduct(ProductDTO productDTO) {
-        Product newProduce = Product.builder()
-                .name(productDTO.name)
-                .desc(productDTO.desc)
-                .price(productDTO.price)
-                .category(productDTO.category)
-                .build();
-
-        return productRepo.save(newProduce);
+    public Product createProduct(Product product) {
+        return productRepo.save(product);
     }
 
     @Override
@@ -40,14 +33,14 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product updateProduct(Long id, ProductDTO productDTO) {
+    public Product updateProduct(Long id, Product productt) {
         Product product = productRepo.findById(id).orElseThrow(() ->
                 new ResourceNotFoundException("Cannot find product with Id: " + id));
         if(product != null) {
-            product.setName(productDTO.name);
-            product.setDesc(productDTO.desc);
-            product.setPrice(productDTO.price);
-            product.setCategory(productDTO.category);
+            product.setName(productt.getName());
+            product.setDesc(productt.getDesc());
+            product.setPrice(productt.getPrice());
+//            product.setCategory(productDTO.category);
             return productRepo.save(product);
         } else {
             return new Product();

@@ -61,7 +61,7 @@ public class CategoryServiceImpl implements CategoryService {
                     .desc(productDTO.desc)
                     .build();
 
-            category.addProduct(product);
+//            category.addProduct(product);
         }
 
         return categoryRepo.save(category);
